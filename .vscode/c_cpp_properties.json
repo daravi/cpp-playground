@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/opt/llvm/include/c++/v1/**",
+                "/opt/conan/gtest/1.10.0/3rdparty/stable/package/18edc22fa20d41cb57d5457421e959f8c8cac384/include",
+                "/opt/conan/boost/1.74.0/3rdparty/stable/package/1b27f9e555b63844e1bb0c34578171bf0a901771/include",
+                "/opt/conan/spdlog/1.9.2/3rdparty/stable/package/e9b678221bf9a1e881a09beafdf2b10d1a94ba41/include",
+                "/opt/conan/openssl/1.1.1h/3rdparty/stable/package/feea8ba05ef6ae395e8654a14663ef7ca8a71229/include",
+                "/opt/conan/zlib/1.2.11/3rdparty/stable/package/feea8ba05ef6ae395e8654a14663ef7ca8a71229/include",
+                "/opt/conan/bzip2/1.0.8/3rdparty/stable/package/497f39b86c657e9c9fcf00a4e965adcb744e1d52/include",
+                "/opt/conan/libbacktrace/cci.20210118/3rdparty/stable/package/feea8ba05ef6ae395e8654a14663ef7ca8a71229/include",
+                "/opt/conan/fmt/8.0.1/3rdparty/stable/package/21e89971b19465e3f90560195db8e9a42f861199/include"
+            ],
+            "defines": [
+                "SPDLOG_COMPILED_LIB",
+                "SPDLOG_FMT_EXTERNAL",
+                "BOOST_STACKTRACE_ADDR2LINE_LOCATION=\"/usr/bin/addr2line\"",
+                "BOOST_STACKTRACE_USE_ADDR2LINE",
+                "BOOST_STACKTRACE_USE_BACKTRACE",
+                "BOOST_STACKTRACE_USE_NOOP"
+            ],
+            "compilerPath": "/opt/llvm/bin/clang++",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
