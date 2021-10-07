@@ -6,9 +6,11 @@
 #include <iostream>
 #include <filesystem>
 #include <functional>
+#include <queue>
 #include <memory>
 #include <mutex>
 #include <numeric>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <sstream>
@@ -140,4 +142,70 @@ std::ostream& operator<< (std::ostream& out, const std::unordered_map<char, int>
 	ss << " }";
 	out << ss.str();
 	return out;
+}
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+	~TreeNode() { delete left; delete right; }
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* l, TreeNode* r) : val(x), left(l), right(r) {}
+    TreeNode(const std::vector<std::optional<int>>& nodes) : TreeNode() {
+        if (nodes.empty() or !nodes.at(0)) return;
+
+        val = nodes.at(0).value();
+
+        if (nodes.size() == 1) return;
+        
+        std::vector<std::optional<int>> leftNodes;
+        std::vector<std::optional<int>> rightNodes;
+        int n = 1;
+        int m = 1;
+        for (int i = 1; i < nodes.size(); ++i) {
+            if (i < n + m) {
+                leftNodes.push_back(nodes.at(i));
+            } else if (i < n + (2 * m)) {
+                rightNodes.push_back(nodes.at(i));
+            }
+            
+            if (i == (n + (2 * m) - 1)) {
+                m = m * 2;
+                n = n + m;
+            }
+        }
+
+        left = new TreeNode(leftNodes);
+        right = new TreeNode(rightNodes);
+    }
+};
+
+std::ostream& operator<< (std::ostream& out, const TreeNode* root) {
+	if (root == nullptr) {
+		out << "[]";
+		return out;
+	}
+    
+	std::stringstream ss;
+    ss << "[";
+    std::queue<const TreeNode*> nodes;
+    nodes.push(root);
+    while (!nodes.empty()) {
+        auto node = nodes.front();
+        nodes.pop();
+        if (node) {
+            ss << node->val << ", ";
+            nodes.push(node->left);
+            nodes.push(node->right);
+        }
+    }
+    ss.seekp(-2, ss.cur);
+    ss << "]";
+    out << ss.str();
+    return out;
+}
+
+std::ostream& operator<< (std::ostream& out, TreeNode root) {
+    return operator<< (out, &root);
 }
